@@ -11,11 +11,12 @@ class stocks:
     items = [
         "JMSRK",
         "JMSLP",
-        "LKJ",
-        "LCJ",
-        "BTC",
-        "ETH",
-        "LUCAS"
+        "LUKE",
+        "LUCY",
+        "MATT",
+        "RIGGA",
+        "LUCAS",
+        "MARK"
     ]
     standard = 1000
     change = 15
