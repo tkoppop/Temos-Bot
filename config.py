@@ -1,8 +1,7 @@
 class economy:
-    taxAmount = 100
+    taxAmount = 1000
     taxTime = 1800
     attributes = ["money", "taxTime"]
-    hashLength = 100
 
 class bot:
     color = 0xFF0000
@@ -15,10 +14,11 @@ class stocks:
         "LKJ",
         "LCJ",
         "BTC",
-        "ETH"
+        "ETH",
+        "LUCAS"
     ]
-    standard = 100
-    change = 5
+    standard = 1000
+    change = 15
     tradeChange = 1
     updateFrequency = 100
 
