@@ -6,8 +6,10 @@ import discord
 from discord.ext import commands
 import core
 import config
+from random import seed
+from random import randint
 from modules import model
-
+seed(1)
 class Economy(commands.Cog):
     def __init__(self, bot: discord.Client):
         self.bot = bot
@@ -45,7 +47,7 @@ class Economy(commands.Cog):
     ) -> None:
         with model.User(ctx.author).open_economy() as sender:
             with model.User(member).open_economy() as receiver:
-                if sender["money"] >= amount >= 0:
+                if sender["money"] >= amount & (amount >= 0):
                     receiver["money"] += amount
                     sender["money"] -= amount
                     await ctx.send(
@@ -91,6 +93,34 @@ class Economy(commands.Cog):
                     embed=core.bot_msg(f"{rem} remaining before you can tax again")
                 )
     
+    @economy.command(alias = ["cf", "c"])
+    async def coinflip(self, ctx: commands.Context, choice:int, amount:int):
+
+        """Coinflip function, enter 0 for heads 1 for tails"""
+        with model.User(ctx.author).open_economy() as data:
+
+            if data["money"]>= amount:
+                value = randint(0,1)
+                if value == 0:
+                    await ctx.send(embed=core.bot_msg(f"it was heads"))
+                else :
+                    await ctx.send(embed=core.bot_msg(f"it was tails"))
+                if value == choice:
+                    data["money"] += amount
+                    await ctx.send(embed=core.bot_msg(f"You won {amount}"))
+                else:
+                    data["money"] -= amount
+                    await ctx.send(embed=core.bot_msg(f"You Lost {amount}"))
+
+            else: 
+                await ctx.send(embed = core.bot_msg(f"you don't have enough money for that poser"))
+
+
+            
+
+
+
+
 
 def setup(bot: commands.Bot) -> None:
     bot.add_cog(Economy(bot))
