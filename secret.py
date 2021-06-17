@@ -1,2 +1,0 @@
-token = 'ODU0NDY4NTc0NDg4MDM1MzI5.YMkX3w.EXNvvYrJQiX_EabqLURIbjoh0Jc'
-key = 'RGAPI-06c6c8fc-86b5-420e-86fd-bc338dc96b13'
