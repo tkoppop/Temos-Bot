@@ -88,8 +88,7 @@ async def leaguestats_error(ctx, error):
 
 extensions = [
     "cogs.economy",
-    "cogs.stock",
-    "cogs.rps"
+    "cogs.stock"
 ]
 
 

@@ -47,7 +47,7 @@ class Economy(commands.Cog):
     ) -> None:
         with model.User(ctx.author).open_economy() as sender:
             with model.User(member).open_economy() as receiver:
-                if sender["money"] >= amount & (amount >= 0):
+                if ((sender["money"] >= amount) & (amount >= 0)):
                     receiver["money"] += amount
                     sender["money"] -= amount
                     await ctx.send(
@@ -93,31 +93,85 @@ class Economy(commands.Cog):
                     embed=core.bot_msg(f"{rem} remaining before you can tax again")
                 )
     
-    @economy.command(alias = ["cf", "c"])
+    @economy.command(aliases=["cf", "c"])
     async def coinflip(self, ctx: commands.Context, choice:int, amount:int):
 
         """Coinflip function, enter 0 for heads 1 for tails"""
         with model.User(ctx.author).open_economy() as data:
+            if((choice == 0) | (choice == 1)):
+                if data["money"]>= amount & amount > 0:
+                    value = randint(0,1)
+                    if value == 0:
+                        await ctx.send(embed=core.bot_msg(f"it was heads"))
+                    else :
+                        await ctx.send(embed=core.bot_msg(f"it was tails"))
+                    if value == choice:
+                        data["money"] += amount
+                        await ctx.send(embed=core.bot_msg(f"You won {amount}"))
+                    else:
+                        data["money"] -= amount
+                        await ctx.send(embed=core.bot_msg(f"You Lost {amount}"))
 
-            if data["money"]>= amount:
-                value = randint(0,1)
-                if value == 0:
-                    await ctx.send(embed=core.bot_msg(f"it was heads"))
-                else :
-                    await ctx.send(embed=core.bot_msg(f"it was tails"))
-                if value == choice:
-                    data["money"] += amount
-                    await ctx.send(embed=core.bot_msg(f"You won {amount}"))
-                else:
-                    data["money"] -= amount
-                    await ctx.send(embed=core.bot_msg(f"You Lost {amount}"))
-
-            else: 
-                await ctx.send(embed = core.bot_msg(f"you don't have enough money for that poser"))
-
-
+                else: 
+                    await ctx.send(embed = core.bot_msg(f"you don't have enough money for that poser"))
             
+            else :
+                await ctx.send(embed = core.bot_msg(f"You can't bet on neither heads or tails"))
 
+
+    @economy.command(aliases=["rps"])
+    async def rockpaperscissors(self, ctx: commands.Context, choice:str, amount:int):
+        """Rock Paper Scissors"""
+        output = 0
+        with model.User(ctx.author).open_economy() as data:
+            if(choice == 'r') | (choice == 'p')|(choice == 's'):
+                """rock == 0, paper == 1, scissors == 2"""
+                if (data["money"]>= amount) & (amount > 0):
+                    value = randint(0,2)
+                    if(choice == 'r') :
+                        if(value == 2):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose scissors"))
+                            output = 0
+                        elif(value == 1):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose paper"))
+                            output = 1
+                        else:
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose rock"))
+                            output = 2
+
+                    elif( choice == 'p'):
+                        if(value == 2):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose scissors"))
+                            output = 1
+                        elif(value == 1):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose paper"))
+                            output = 2
+                        else:
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose rock"))
+                            output = 0    
+                    else:
+                        if(value == 2):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose scissors"))
+                            output = 2
+                        elif(value == 1):
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose paper"))
+                            output = 0
+                        else:
+                            await ctx.send(embed = core.bot_msg(f"your opponent chose rock"))
+                            output = 1
+                    if(output == 0):
+                        data["money"] += amount
+                        await ctx.send(embed = core.bot_msg(f"You win {amount}!"))
+                    elif(output == 1):
+                        data["money"] -= amount
+                        await ctx.send(embed = core.bot_msg(f"You Lose {amount} :("))
+                    else:
+                        await ctx.send(embed = core.bot_msg(f"You tie"))
+                else:
+                    await ctx.send(embed = core.bot_msg(f"You don't have enough money for that"))     
+            
+            else:
+                await ctx.send(embed = core.bot_msg(f"you have to choose one of rock(r) paper (p) or scissors(s)"))
 
 
 

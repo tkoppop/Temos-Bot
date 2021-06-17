@@ -155,6 +155,27 @@ class Stocks(commands.Cog):
             await update_stocks()
             await asyncio.sleep(config.stocks.updateFrequency)
 
+    # @stocks.command(alias=["lb"])
+    # async def leaderboards(self, ctx:commands.Context):
+    #     embed = discord.Embed(color=config.bot.color, title="Leaderboard")
+    #         for User in model.User():
+    #             with model.User(users) as target:
+    #                 with target.openeconomy() as mon:
+    #                     with model.Stocks().open() as stocks:
+    #                         totalValue = 0
+    #                         for stock, amount in mon["stocks"].items():
+    #                             if amount > 0:
+    #                                 value = amount * stocks[stock]
+    #                             totalValue += value
+    #                         embed  = core.bot_msg(f"{totalValue + mon['money']}")
+    #           await ctx.send(embed=embed)
+
+
+
+
+
+
+
 
 def setup(bot: commands.Bot) -> None:
     bot.add_cog(Stocks(bot))
