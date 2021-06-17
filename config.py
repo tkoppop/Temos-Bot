@@ -21,6 +21,6 @@ class stocks:
     standard = 1000
     change = 15
     tradeChange = 1
-    updateFrequency = 100
+    updateFrequency = 60
 
 

@@ -15,6 +15,8 @@ async def update_stocks() -> None:
             stocks[stock] += random.randint(
                 -1 * config.stocks.change, config.stocks.change
             )
+            if stocks[stock] <= 0:
+                stocks[stock] = config.standard
 
 
 class Stocks(commands.Cog):
