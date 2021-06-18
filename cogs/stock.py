@@ -5,18 +5,34 @@ from discord.ext import commands
 import core
 import config
 from modules import model
-
+from riotwatcher import LolWatcher
+watcher = LolWatcher('RGAPI-32465dab-3000-4256-a151-3b4e21ffe7a2')
 
 async def update_stocks() -> None:
     """Updates the stocks"""
 
     with model.Stocks().open() as stocks:
         for stock in stocks:
-            stocks[stock] += random.randint(
-                -1 * config.stocks.change, config.stocks.change
-            )
-            if stocks[stock] <= 0:
-                stocks[stock] = config.standard
+            if (stock == "JMSLP"):
+                print('updating lp')
+                summoner = watcher.summoner.by_name('na1','sodacrackers')
+                stats = watcher.league.by_summoner('na1', summoner['id'])
+                num = 0
+                if (stats[0]['queueType'] == 'RANKED_SOLO_5x5'):
+                    num = 0
+                else:
+                    num = 1
+                lp = stats[num]['leaguePoints']
+                stocks[stock] = lp * 100
+                if stocks[stock] <= 0:
+                    stocks[stock] = config.standard
+                
+            else:    
+                stocks[stock] += random.randint(
+                    -1 * config.stocks.change, config.stocks.change
+                )
+                if stocks[stock] <= 0:
+                    stocks[stock] = config.standard
 
 
 class Stocks(commands.Cog):
