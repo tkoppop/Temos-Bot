@@ -44,7 +44,7 @@ async def test(ctx: commands.Context, number: int) -> None:
     await core.bot_send(ctx.channel, str(number + 1))
 
 @bot.command()
-async def clear(ctx, amount : int):
+async def clear(ctx, amount : int = 1):
     await ctx.channel.purge(limit=amount)
 
 @clear.error

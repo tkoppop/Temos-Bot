@@ -76,67 +76,75 @@ class Stocks(commands.Cog):
     async def buy(self, ctx: commands.Context, stock: str, amount: int = 1) -> None:
         with model.User(ctx.author).open_economy() as eco:
             with model.Stocks().open() as stocks:
-                if stock.upper() in stocks:
-                    stock = stock.upper()
-                    price = (
-                        stocks[stock] + config.stocks.tradeChange * amount
-                    ) * amount
-                    if eco["money"] >= price:
-                        eco["money"] -= price
-                        eco["stocks"][stock] += amount
-                        stocks[stock] += config.stocks.tradeChange * amount
-                        await core.bot_send(
-                            ctx,
-                            "Bought {0} {1} for {2} {3}".format(
-                                amount, stock, price, await core.lukeEmoji(ctx.guild),
-                            ),
-                        )
+                if amount <=0:
+                    await ctx.send(f"STOP this was removed")
+                
+                else:
+                    if stock.upper() in stocks:
+                        stock = stock.upper()
+                        price = (
+                            stocks[stock] + config.stocks.tradeChange * amount
+                        ) * amount
+                        if eco["money"] >= price:
+                            eco["money"] -= price
+                            eco["stocks"][stock] += amount
+                            stocks[stock] += config.stocks.tradeChange * amount
+                            await core.bot_send(
+                                ctx,
+                                "Bought {0} {1} for {2} {3}".format(
+                                    amount, stock, price, await core.lukeEmoji(ctx.guild),
+                                ),
+                            )
+                        else:
+                            await core.bot_send(
+                                ctx,
+                                "Sorry, you have {0} of {1} {2} {3}".format(
+                                    eco["money"],
+                                    price,
+                                    await core.lukeEmoji(ctx.guild),
+                                    "required for this purchase",
+                                ),
+                            )
+
                     else:
                         await core.bot_send(
                             ctx,
-                            "Sorry, you have {0} of {1} {2} {3}".format(
-                                eco["money"],
-                                price,
-                                await core.lukeEmoji(ctx.guild),
-                                "required for this purchase",
-                            ),
+                            f"Stock {stock} doesnt exist, use 'l.s m' to view all stocks",
                         )
-
-                else:
-                    await core.bot_send(
-                        ctx,
-                        f"Stock {stock} doesnt exist, use 'l.s m' to view all stocks",
-                    )
 
     @stocks.command(aliases=["s"])
     async def sell(self, ctx: commands.Context, stock: str, amount: int = 1) -> None:
         with model.User(ctx.author).open_economy() as eco:
             with model.Stocks().open() as stocks:
-                if stock.upper() in stocks:
-                    stock = stock.upper()
-                    price = stocks[stock] * amount
-                    if eco["stocks"][stock] >= amount:
-                        eco["stocks"][stock] -= amount
-                        eco["money"] += price
-                        stocks[stock] -= config.stocks.tradeChange * amount
-                        await core.bot_send(
-                            ctx,
-                            "Sold {0} {1} for {2} {3}".format(
-                                amount, stock, price, await core.lukeEmoji(ctx.guild),
-                            ),
-                        )
+                if amount <=0:
+                    await ctx.send(f"STOP this was removed")
+
+                else:
+                    if stock.upper() in stocks:
+                        stock = stock.upper()
+                        price = stocks[stock] * amount
+                        if eco["stocks"][stock] >= amount:
+                            eco["stocks"][stock] -= amount
+                            eco["money"] += price
+                            stocks[stock] -= config.stocks.tradeChange * amount
+                            await core.bot_send(
+                                ctx,
+                                "Sold {0} {1} for {2} {3}".format(
+                                    amount, stock, price, await core.lukeEmoji(ctx.guild),
+                                ),
+                            )
+                        else:
+                            await core.bot_send(
+                                ctx,
+                                "Sorry, you have {0} of {1} {2}".format(
+                                    eco["stocks"][stock], stock, "required for this sale",
+                                ),
+                            )
                     else:
                         await core.bot_send(
                             ctx,
-                            "Sorry, you have {0} of {1} {2}".format(
-                                eco["stocks"][stock], stock, "required for this sale",
-                            ),
+                            f"Stock {stock} doesnt exist, use 'l.s m' view to view all stocks",
                         )
-                else:
-                    await core.bot_send(
-                        ctx,
-                        f"Stock {stock} doesnt exist, use 'l.s m' view to view all stocks",
-                    )
 
     @stocks.command(hidden=True, aliases=["u"])
     @commands.is_owner()
