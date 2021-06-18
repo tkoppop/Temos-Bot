@@ -11,7 +11,7 @@ Economy commands:
   
     l.e coinflip <0 or 1> <amount> -> coinflip a certain amount, double it or lose it all
   
-    l.e rps <r or p or s> <amount> -> rock paper scissors, double your money, tie, or lost it all.
+    l.e rps <r, p, or s> <amount> -> rock paper scissors, double your money, tie, or lose it all.
   
   
 Stock Commands:
