@@ -23,7 +23,7 @@ async def update_stocks() -> None:
                 else:
                     num = 1
                 lp = stats[num]['leaguePoints']
-                stocks[stock] = lp * 100
+                stocks[stock] = lp * 1000
                 if stocks[stock] <= 0:
                     stocks[stock] = config.standard
                 
