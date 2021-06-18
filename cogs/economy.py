@@ -99,7 +99,7 @@ class Economy(commands.Cog):
         """Coinflip function, enter 0 for heads 1 for tails"""
         with model.User(ctx.author).open_economy() as data:
             if((choice == 0) | (choice == 1)):
-                if data["money"]>= amount & amount > 0:
+                if (data["money"]>= amount) & (amount > 0):
                     value = randint(0,1)
                     if value == 0:
                         await ctx.send(embed=core.bot_msg(f"it was heads"))
