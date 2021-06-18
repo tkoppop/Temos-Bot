@@ -16,7 +16,8 @@ class stocks:
         "MATT",
         "RIGGA",
         "LUCAS",
-        "MARK"
+        "MARK",
+        "BBY"
     ]
     standard = 1000
     change = 15
