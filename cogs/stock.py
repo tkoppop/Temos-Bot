@@ -6,7 +6,7 @@ import core
 import config
 from modules import model
 from riotwatcher import LolWatcher
-watcher = LolWatcher('RGAPI-32465dab-3000-4256-a151-3b4e21ffe7a2')
+watcher = LolWatcher('RGAPI-fe98893e-5f79-455f-830e-fdb2e64cafcd')
 
 async def update_stocks() -> None:
     """Updates the stocks"""
@@ -23,6 +23,10 @@ async def update_stocks() -> None:
                 else:
                     num = 1
                 lp = stats[num]['leaguePoints']
+                if (stocks[stock] > lp*1000):
+                    print("James just lost")
+                elif (stocks[stock] < lp*1000):
+                    print("James just Won")
                 stocks[stock] = lp * 1000
                 if stocks[stock] <= 0:
                     stocks[stock] = config.standard
