@@ -6,7 +6,7 @@ import core
 import config
 from modules import model
 from riotwatcher import LolWatcher
-watcher = LolWatcher('RGAPI-fe98893e-5f79-455f-830e-fdb2e64cafcd')
+watcher = LolWatcher('RGAPI-01e72203-8095-4795-9512-660b84880d92')
 
 async def update_stocks() -> None:
     """Updates the stocks"""
@@ -14,7 +14,7 @@ async def update_stocks() -> None:
     with model.Stocks().open() as stocks:
         for stock in stocks:
             if (stock == "JMSLP"):
-                print('updating lp')
+                core.debug_info('updating lp')
                 summoner = watcher.summoner.by_name('na1','sodacrackers')
                 stats = watcher.league.by_summoner('na1', summoner['id'])
                 num = 0
