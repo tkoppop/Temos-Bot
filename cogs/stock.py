@@ -4,9 +4,10 @@ import discord
 from discord.ext import commands
 import core
 import config
+import secret
 from modules import model
 from riotwatcher import LolWatcher
-watcher = LolWatcher('RGAPI-955ec175-11d8-460c-9a04-a512d506a804')
+watcher = LolWatcher(secret.key)
 
 async def update_stocks() -> None:
     """Updates the stocks"""
