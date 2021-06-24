@@ -30,14 +30,14 @@ async def update_stocks() -> None:
                     print("James just Won")
                 stocks[stock] = lp * 1000
                 if stocks[stock] <= 0:
-                    stocks[stock] = config.standard
+                    stocks[stock] = config.stocks.standard
                 
             else:    
                 stocks[stock] += random.randint(
                     -1 * config.stocks.change, config.stocks.change
                 )
                 if stocks[stock] <= 0:
-                    stocks[stock] = config.standard
+                    stocks[stock] = config.stocks.standard
 
 
 class Stocks(commands.Cog):
