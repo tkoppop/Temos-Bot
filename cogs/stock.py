@@ -6,7 +6,7 @@ import core
 import config
 from modules import model
 from riotwatcher import LolWatcher
-watcher = LolWatcher('RGAPI-01e72203-8095-4795-9512-660b84880d92')
+watcher = LolWatcher('RGAPI-955ec175-11d8-460c-9a04-a512d506a804')
 
 async def update_stocks() -> None:
     """Updates the stocks"""
