@@ -25,7 +25,7 @@ async def update_stocks() -> None:
                     num = 1
                 lp = stats[num]['leaguePoints']
                 if (stocks[stock] > lp*1000):
-                    print("James just lost")
+                    core.debug_info("James just lost")
                 elif (stocks[stock] < lp*1000):
                     print("James just Won")
                 stocks[stock] = lp * 1000
