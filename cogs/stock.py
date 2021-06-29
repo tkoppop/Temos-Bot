@@ -27,7 +27,7 @@ async def update_stocks() -> None:
                 if (stocks[stock] > lp*1000):
                     core.debug_info("James just lost")
                 elif (stocks[stock] < lp*1000):
-                    print("James just Won")
+                    core.debug_info("James just Won")
                 stocks[stock] = lp * 1000
                 if stocks[stock] <= 0:
                     stocks[stock] = config.stocks.standard
