@@ -20,7 +20,7 @@ class stocks:
         "BBY"
     ]
     standard = 1000
-    change = 15
+    change = 20
     tradeChange = 1
     updateFrequency = 60
 
